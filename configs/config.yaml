@@ -1,0 +1,68 @@
+# Configuration for Deep Learning Assignment 1
+# Modify these parameters to run different experiments
+
+# Dataset selection: 'adult', 'cifar100', 'pcam'
+dataset: 'adult'
+
+# Architecture selection: 'mlp', 'cnn', 'attention'
+architecture: 'mlp'
+
+# Training parameters
+training:
+  batch_size: 256      # Larger batches = faster (was 128)
+  epochs: 20           # Reduced from 50 - still enough to see trends
+  learning_rate: 0.001
+  optimizer: 'adam'
+  weight_decay: 0.0001
+  
+  # Early stopping
+  early_stopping: false
+  patience: 5          # Stop earlier if not improving (was 10)
+  
+  # Device
+  device: 'cuda'  # 'cuda' or 'cpu'
+  
+  # Random seed for reproducibility
+  seed: 42
+
+# Data split ratios (if not predefined)
+data_split:
+  train: 0.7
+  val: 0.15
+  test: 0.15
+
+# MLP Architecture
+mlp:
+  hidden_sizes: [128, 64]  # Reduced from [256, 128, 64] - faster training
+  dropout: 0.3
+  batch_norm: true
+  activation: 'relu'
+
+# CNN Architecture  
+cnn:
+  conv_channels: [32, 64]      # Reduced from [32, 64, 128] - 2 layers instead of 3
+  kernel_sizes: [3, 3]         # Match reduced layers
+  pool_sizes: [2, 2]           # Match reduced layers
+  fc_sizes: [128]              # Reduced from [256, 128]
+  dropout: 0.3
+  batch_norm: true
+
+# Attention Architecture (Bonus)
+attention:
+  embed_dim: 64              # Reduced from 128
+  num_heads: 4               # Reduced from 8
+  num_layers: 2              # Reduced from 3
+  dropout: 0.1
+  feedforward_dim: 256       # Reduced from 512
+
+# Paths
+paths:
+  data_dir: './data'
+  results_dir: './results'
+  checkpoint_dir: './checkpoints'
+  
+# Logging
+logging:
+  tensorboard: true
+  save_plots: true
+  verbose: true

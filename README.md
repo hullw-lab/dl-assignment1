@@ -214,6 +214,7 @@ CNN was not used for the Adult dataset since it is not image data.
 
 ### Results Summary Table
 
+Test 1
 | Dataset    | Architecture | Accuracy | F1-Score | Training Time | Params |
 |------------|--------------|----------|----------|---------------|--------|
 | Adult      | MLP          | 0.8535   | 0.6808   | 9.4s          | 10,690 |
@@ -221,6 +222,17 @@ CNN was not used for the Adult dataset since it is not image data.
 | CIFAR-100  | CNN          | 0.1930   | 0.1652   | 77.5s         | 556,900|
 | PCam       | MLP          | 0.5100   | 0.3951   | 6.7s          | 3.5M   |
 | PCam       | CNN          | 0.8734   | 0.8698   | 987s          | 2.2M   |
+
+Test 2
+
+| Dataset    | Architecture | Accuracy | F1-Score | Training Time | Params |
+|------------|--------------|----------|----------|---------------|--------|
+| Adult      | MLP          | 0.8535   | 0.6808   | 9.4s          | 10,690 |
+| CIFAR-100  | MLP          | 0.1826   | 0.1566   | 77.5s         | 408,484|
+| CIFAR-100  | CNN          | 0.1930   | 0.1652   | 77.5s         | 556,900|
+| PCam       | MLP          | 0.5100   | 0.3951   | 6.7s          | 3.5M   |
+| PCam       | CNN          | 0.8734   | 0.8698   | 987s          | 2.2M   |
+
 
 ## Analysis and Insights
 

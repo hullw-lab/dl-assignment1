@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""
-Quick training script - runs only MANDATORY experiments
-Skips attention models (bonus) to save time
-
-Estimated time: 30-45 minutes total (vs 3-4 hours for all)
-"""
 
 import torch
 import yaml
@@ -30,7 +24,7 @@ def run_experiment(dataset_name, architecture, config_path='./configs/config.yam
     """Run a single experiment"""
     
     print("\n" + "="*70)
-    print(f"🚀 Running: {dataset_name.upper()} + {architecture.upper()}")
+    print(f" Running: {dataset_name.upper()} + {architecture.upper()}")
     print("="*70)
     
     config = load_config(config_path)
@@ -84,18 +78,18 @@ def run_experiment(dataset_name, architecture, config_path='./configs/config.yam
         save_dir=save_dir
     )
     
-    print("\n📚 TRAINING...")
+    print("\n TRAINING...")
     start_time = time.time()
     history, training_time = trainer.train(num_epochs=config['training']['epochs'])
     
-    print("\n🎯 TESTING...")
+    print("\n TESTING...")
     test_metrics = trainer.test()
     test_metrics['training_time'] = training_time
     
     trainer.close()
     
     elapsed = time.time() - start_time
-    print(f"\n✅ Completed in {elapsed/60:.1f} minutes")
+    print(f"\ Completed in {elapsed/60:.1f} minutes")
     print(f"   Accuracy: {test_metrics['accuracy']:.4f}")
     print(f"   F1-Score: {test_metrics['f1_score']:.4f}")
     
@@ -106,7 +100,7 @@ def main():
     """Run only MANDATORY experiments (skip attention models)"""
     
     print("="*70)
-    print("🏃 QUICK TRAINING MODE - MANDATORY EXPERIMENTS ONLY")
+    print(" QUICK TRAINING MODE - MANDATORY EXPERIMENTS ONLY")
     print("="*70)
     print("\nThis will run 6 experiments (skipping bonus attention models):")
     print("  1. Adult + MLP")
@@ -144,14 +138,14 @@ def main():
                 'training_time': metrics['training_time']
             }
         except Exception as e:
-            print(f"\n❌ Error: {e}")
+            print(f"\n Error: {e}")
             results[f"{dataset}_{arch}"] = {'error': str(e)}
     
     total_time = time.time() - total_start
     
     # Print summary
     print("\n" + "="*70)
-    print("🎉 ALL EXPERIMENTS COMPLETED!")
+    print("ALL EXPERIMENTS COMPLETED")
     print("="*70)
     print(f"\nTotal time: {total_time/60:.1f} minutes")
     

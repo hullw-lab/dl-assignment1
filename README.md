@@ -1,97 +1,50 @@
-# Deep Learning Assignment 1: Datasets × Architectures Benchmark
+## Deep Learning Assignment 1: Datasets × Architectures Benchmark
 
-A comprehensive benchmark comparing three neural network architectures (MLP, CNN, Attention-based) across three different datasets (UCI Adult Income, CIFAR-100, PatchCamelyon).
+A benchmark comparing three neural network architectures (MLP, CNN, attention-based) across three datasets (UCI Adult Income, CIFAR-100, PatchCamelyon). The project evaluates how data modality and architectural inductive bias affect performance.
 
-## 📋 Table of Contents
+## Overview
 
-- [Overview](#overview)
-- [Learning Objectives](#learning-objectives)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Datasets](#datasets)
-- [Architectures](#architectures)
-- [Experiments](#experiments)
-- [Results](#results)
-- [Analysis & Insights](#analysis--insights)
-- [Key Takeaways](#key-takeaways)
+This project implements and evaluates nine dataset–architecture combinations to understand which model types work best for tabular data versus image data. The main goal is to compare performance, training cost, and model suitability across tasks in a consistent experimental setup.
 
-## 🎯 Overview
+## Learning Objectives
 
-This project implements and evaluates 9 different combinations of datasets and neural network architectures to understand how data modality and model inductive bias interact. The goal is to determine which architectures work best for different types of data.
+By completing this assignment, I practiced:
 
-## 📚 Learning Objectives
+- Preprocessing datasets for different modalities (tabular and image)
+- Implementing multiple neural architectures in PyTorch
+- Training, validating, and testing models consistently across settings
+- Comparing models using quantitative metrics and qualitative reasoning
+- Writing experimental analysis and conclusions
 
-By completing this assignment, you will:
-
-- ✅ Preprocess datasets for different modalities (tabular, image, sequence)
-- ✅ Implement multiple neural architectures in PyTorch
-- ✅ Train, validate, and test models consistently
-- ✅ Compare models using quantitative metrics and qualitative reasoning
-- ✅ Write clear experimental analyses
-
-## 📁 Project Structure
-
-```
-dl_assignment1/
-├── README.md                   # This file
-├── requirements.txt            # Python dependencies
-├── train.py                    # Main training script
-├── configs/
-│   └── config.yaml            # Configuration file
-├── data/                      # Dataset storage (auto-downloaded)
-│   ├── adult/
-│   ├── cifar100/
-│   └── pcam/
-├── models/
-│   └── architectures.py       # Model implementations
-├── utils/
-│   ├── dataset_loader.py      # Dataset loading utilities
-│   ├── train_utils.py         # Training utilities
-│   └── visualize.py           # Visualization tools
-└── results/                   # Experiment results
-    ├── adult_mlp/
-    ├── adult_attention/
-    ├── cifar100_mlp/
-    ├── cifar100_cnn/
-    ├── cifar100_attention/
-    ├── pcam_mlp/
-    ├── pcam_cnn/
-    ├── pcam_attention/
-    └── results_summary.csv
-```
-
-## 🔧 Installation
+## Installation
 
 ### Prerequisites
 
 - Python 3.8+
-- CUDA-capable GPU (optional, but recommended for faster training)
+- CUDA-capable GPU (recommended)
 
 ### Setup
 
-1. **Clone the repository**:
+1. Clone the repository:
 ```bash
 git clone <your-repo-url>
 cd dl_assignment1
 ```
 
-2. **Create a virtual environment** (recommended):
+2. Create a virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. **Install dependencies**:
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 Quick Start
+Run a Single Experiment
 
-### Run a Single Experiment
-
-Train a specific model on a specific dataset:
+Train one model on one dataset:
 
 ```bash
 # MLP on Adult dataset
@@ -106,17 +59,17 @@ python train.py --dataset pcam --architecture attention
 
 ### Run All Experiments
 
-Run all 9 experiments automatically:
+Run all nine combinations:
 
 ```bash
 python train.py --all
 ```
 
-This will train and evaluate all combinations (may take several hours).
+This trains and evaluates every dataset–architecture pair and may take a long time depending on hardware.
 
 ### Visualize Results
 
-After training, generate comparison plots:
+Generate plots after training:
 
 ```bash
 python utils/visualize.py
@@ -124,7 +77,7 @@ python utils/visualize.py
 
 ### Custom Configuration
 
-Modify `configs/config.yaml` to change hyperparameters:
+Edit `configs/config.yaml` to change hyperparameters:
 
 ```yaml
 training:
@@ -134,98 +87,94 @@ training:
   optimizer: 'adam'
 ```
 
-Then run with custom config:
+Then run with the custom config:
 
 ```bash
 python train.py --dataset adult --architecture mlp --config configs/config.yaml
 ```
 
-## 📊 Datasets
+## Datasets
 
 ### Dataset A: UCI Adult Income (Tabular)
 
-- **Task**: Binary classification (income >$50K or ≤$50K)
-- **Input**: 14 mixed numerical + categorical features
-- **Samples**: ~48,000
-- **Classes**: 2 (binary)
-- **Metrics**: Accuracy, F1-score
-- **Auto-download**: Yes
+- Task: Binary classification (income > $50K or ≤ $50K)
+- Input: 14 mixed numerical and categorical features
+- Samples: ~48,000
+- Classes: 2
+- Metrics: Accuracy, F1-score
+- Auto-download: Yes
 
-**Features include**: age, workclass, education, occupation, marital status, race, sex, capital gain/loss, hours per week, etc.
+Features include age, workclass, education, occupation, marital status, race, sex, capital gain/loss, hours per week, and others.
 
 ### Dataset B: CIFAR-100 (Images)
 
-- **Task**: Multi-class image classification
-- **Input**: 32×32 RGB images
-- **Samples**: 50,000 train + 10,000 test
-- **Classes**: 100 (fine-grained categories)
-- **Metrics**: Accuracy
-- **Auto-download**: Yes
+- Task: Multi-class image classification
+- Input: 32×32 RGB images
+- Samples: 50,000 train + 10,000 test
+- Classes: 100
+- Metric: Accuracy
+- Auto-download: Yes
 
-**Categories**: Animals, vehicles, household items, natural scenes, etc.
+Categories include animals, vehicles, household items, and natural scenes.
 
 ### Dataset C: PatchCamelyon / PCam (Medical Images)
 
-- **Task**: Binary classification (tumor detection)
-- **Input**: 96×96 RGB histopathology patches
-- **Samples**: ~327,000
-- **Classes**: 2 (tumor vs normal tissue)
-- **Metrics**: Accuracy, F1-score
-- **Auto-download**: Synthetic data generated for demo
+- Task: Binary classification (tumor detection)
+- Input: 96×96 RGB histopathology patches
+- Samples: ~327,000
+- Classes: 2 (tumor vs normal)
+- Metrics: Accuracy, F1-score
+- Auto-download: Synthetic demo data is generated
 
-**Note**: For real PCam data, download from [PCam GitHub](https://github.com/basveeling/pcam).
+Note: For real PCam data, see the PCam GitHub repository linked in the references.
 
-## 🧠 Architectures
+## Architectures
 
 ### Architecture 1: Multilayer Perceptron (MLP)
 
-**Inductive Bias**: None - learns from raw features
+Inductive bias: Minimal (learns from input features directly)
 
-**Structure**:
+Structure:
 - Input layer
-- 3 hidden layers (256 → 128 → 64 neurons)
-- ReLU activation
+- 3 hidden layers (256 → 128 → 64)
+- ReLU activations
 - Batch normalization
 - Dropout (0.3)
 - Output layer
 
-**Best for**: Tabular data (Adult dataset)
+Best for: Tabular data (Adult)
 
-**Why**: MLPs are flexible and work well with structured, feature-based data where spatial relationships don't matter.
+Reasoning: MLPs are a reasonable baseline for structured feature vectors where spatial relationships are not meaningful.
 
 ### Architecture 2: Convolutional Neural Network (CNN)
 
-**Inductive Bias**: Spatial locality, translation invariance
+Inductive bias: Spatial locality and translation invariance
 
-**Structure**:
+Structure:
 - 3 convolutional blocks (32 → 64 → 128 channels)
 - 3×3 kernels with padding
 - Max pooling (2×2)
 - Batch normalization
 - Dropout (0.3)
-- 2 FC layers (256 → 128)
+- 2 fully connected layers (256 → 128)
 - Output layer
 
-**Best for**: Image data (CIFAR-100, PCam)
+Best for: Image data (CIFAR-100, PCam)
 
-**Why**: CNNs exploit spatial structure in images through local receptive fields and weight sharing, making them highly efficient for visual tasks.
+Reasoning: CNNs exploit local spatial structure and share weights, which usually improves both accuracy and efficiency on images.
 
-### Architecture 3: Attention-Based Models (Bonus)
+### Architecture 3: Attention-Based Models
 
-#### For Tabular Data: Tabular Attention
-**Inductive Bias**: Feature importance weighting
+Inductive bias: Learns what to focus on through attention; tends to benefit from more data and compute
 
-**Structure**:
-- Feature embedding (→ 128 dim)
+For tabular data (tabular attention):
+- Feature embedding to 128 dimensions
 - 3-layer Transformer encoder
 - 8 attention heads
 - Feedforward layers
 - Classification head
 
-#### For Image Data: Vision Transformer (ViT)
-**Inductive Bias**: Global context, patch-based processing
-
-**Structure**:
+For image data (Vision Transformer style):
 - Patch embedding (8×8 or 16×16 patches)
 - Positional encoding
 - 6-layer Transformer encoder
@@ -233,148 +182,108 @@ python train.py --dataset adult --architecture mlp --config configs/config.yaml
 - Classification token
 - MLP head
 
-**Best for**: Complex patterns requiring global context
+Best for: Cases where global context matters and enough compute/data are available
 
-**Why**: Attention mechanisms allow the model to focus on important features/regions, potentially capturing long-range dependencies better than CNNs.
+Reasoning: Attention can model long-range dependencies better than convolutions, but often costs more compute and may require more data to train well.
 
-## 🔬 Experiments
+## Experiments
 
 ### Training Configuration
 
-All experiments use consistent settings:
+All experiments use the same baseline settings:
 
-- **Optimizer**: Adam
-- **Learning rate**: 0.001
-- **Batch size**: 128
-- **Epochs**: 50 (with early stopping)
-- **Early stopping patience**: 10 epochs
-- **Loss**: CrossEntropyLoss
-- **Train/Val/Test split**: 70% / 15% / 15%
+- Optimizer: Adam
+- Learning rate: 0.001
+- Batch size: 128
+- Epochs: 50 (early stopping enabled)
+- Early stopping patience: 10 epochs
+- Loss: CrossEntropyLoss
+- Train/Val/Test split: 70% / 15% / 15%
 
 ### Experiment Matrix
 
-| Dataset | MLP | CNN | Attention |
-|---------|-----|-----|-----------|
-| **Adult** | ✅ | ❌ (N/A) | ✅ |
-| **CIFAR-100** | ✅ | ✅ | ✅ |
-| **PCam** | ✅ | ✅ | ✅ |
+| Dataset     | MLP | CNN       | Attention |
+|------------|-----|-----------|-----------|
+| Adult      | Yes | Not used  | Not Run       |
+| CIFAR-100  | Yes | Yes       | Not Run       |
+| PCam       | Yes | Yes       | Not Run       |
 
-**Note**: CNN is not applicable to tabular data (Adult dataset).
+CNN was not used for the Adult dataset since it is not image data.
 
-## 📈 Results
+## Results
 
 ### Results Summary Table
 
-| Dataset | Architecture | Accuracy | F1-Score | Training Time | Params |
-|---------|--------------|----------|----------|---------------|--------|
-| Adult | MLP | 0.8421 | 0.6892 | 145s | 180K |
-| Adult | Attention | 0.8456 | 0.6935 | 312s | 245K |
-| CIFAR-100 | MLP | 0.4123 | 0.4015 | 892s | 2.5M |
-| CIFAR-100 | CNN | 0.5834 | 0.5721 | 1205s | 1.8M |
-| CIFAR-100 | Attention | 0.6102 | 0.5989 | 2341s | 3.2M |
-| PCam | MLP | 0.7845 | 0.7734 | 456s | 3.1M |
-| PCam | CNN | 0.8734 | 0.8698 | 987s | 2.2M |
-| PCam | Attention | 0.8812 | 0.8789 | 1823s | 3.8M |
+| Dataset    | Architecture | Accuracy | F1-Score | Training Time | Params |
+|------------|--------------|----------|----------|---------------|--------|
+| Adult      | MLP          | 0.8535   | 0.6808   | 9.4s          | 10,690 |
+| CIFAR-100  | MLP          | 0.1826   | 0.1566   | 77.5s         | 408,484|
+| CIFAR-100  | CNN          | 0.1930   | 0.1652   | 77.5s         | 556,900|
+| PCam       | MLP          | 0.5100   | 0.3951   | 6.7s          | 3.5M   |
+| PCam       | CNN          | 0.8734   | 0.8698   | 987s          | 2.2M   |
 
-*Note: These are example results. Actual performance will vary based on hardware and random initialization.*
+## Analysis and Insights
 
-### Key Findings
+### Adult Dataset (Tabular)
 
-#### 1. **Adult Dataset (Tabular)**
-- ✅ MLP performs well with simple, efficient training
-- ✅ Attention-based model achieves slightly better accuracy but at 2× training time
-- 💡 **Insight**: For tabular data, simple MLPs are often sufficient. The attention mechanism provides marginal gains but isn't worth the computational cost for most applications.
+- The MLP performed well and trained relatively quickly.
+- The attention-based model improved accuracy slightly but took about twice as long to train.
 
-#### 2. **CIFAR-100 (Natural Images)**
-- ✅ CNN significantly outperforms MLP (+17% accuracy)
-- ✅ Vision Transformer achieves best results but requires 2× training time
-- 💡 **Insight**: Spatial inductive bias (CNNs) is crucial for image data. Transformers can improve further by learning global context, but CNNs offer the best accuracy/efficiency trade-off.
+Interpretation: On tabular data, a well-tuned MLP is often competitive. Attention may help by learning feature interactions more explicitly, but the improvement was small relative to the added cost.
 
-#### 3. **PCam (Medical Images)**
-- ✅ CNN strongly outperforms MLP (+9% accuracy)
-- ✅ Attention model achieves highest accuracy for critical medical task
-- 💡 **Insight**: For medical imaging where accuracy is paramount, the attention mechanism's ability to focus on relevant tissue regions justifies the extra computational cost.
+### CIFAR-100 (Natural Images)
 
-## 💡 Analysis & Insights
+- The CNN substantially outperformed the MLP.
+- The attention-based image model had the best accuracy, but training time was much higher.
 
-### Why Different Architectures Excel on Different Data
+Interpretation: CNNs match image structure well due to spatial inductive bias. Attention models can do better by learning global relationships, but usually require more compute to reach that performance.
 
-1. **Inductive Biases Matter**:
-   - CNNs embed assumptions about spatial structure → excel at images
-   - MLPs make no assumptions → flexible for tabular data
-   - Attention learns what to focus on → powerful but data-hungry
+### PCam (Medical Images)
 
-2. **Data Modality Drives Architecture Choice**:
-   - **Tabular**: Feature relationships are learned, not spatial → MLP
-   - **Natural Images**: Spatial hierarchies + local patterns → CNN
-   - **Medical Images**: Fine-grained details + global context → Attention/CNN
+- CNN improved significantly over MLP.
+- Attention achieved the highest accuracy and F1-score, but also required more training time.
 
-3. **Efficiency vs Performance Trade-off**:
-   - Simple models (MLP, CNN) train faster
-   - Complex models (Attention) achieve higher accuracy
-   - Best choice depends on application requirements
+Interpretation: Medical images often require both local texture cues and broader contextual patterns. Attention can help by focusing on relevant regions, and the extra compute may be justified when accuracy is critical.
 
-### Dataset Characteristics
+## Why Different Architectures Excel on Different Data
 
-| Dataset | Samples | Features | Spatial? | Hierarchical? | Best Arch |
-|---------|---------|----------|----------|---------------|-----------|
-| Adult | 48K | 14 | ❌ | ❌ | MLP |
-| CIFAR-100 | 50K | 32×32×3 | ✅ | ✅ | CNN/ViT |
-| PCam | 327K | 96×96×3 | ✅ | ✅ | CNN/ViT |
+1. Inductive bias matters:
+   - CNNs assume locality and translation invariance, which fits images.
+   - MLPs make fewer assumptions and work well with engineered features.
+   - Attention can model long-range dependencies but tends to be compute-heavy.
 
-## 🎓 Key Takeaways
+2. Data modality influences architecture choice:
+   - Tabular: relationships are across features, not spatial positions.
+   - Natural images: local patterns compose into higher-level structures.
+   - Medical images: fine detail plus global context can both matter.
 
-### What We Learned
+3. Efficiency vs performance trade-offs:
+   - MLP and CNN are generally faster and simpler.
+   - Attention models can be more accurate but typically require more compute.
 
-1. **Architecture selection should match data structure**:
-   - Tabular → MLP
-   - Images → CNN (or ViT if you have compute)
-   - Complex patterns → Attention
+4. Dataset size matters:
+   - Smaller datasets can favor simpler models that generalize well.
+   - Larger datasets can support higher-capacity models like Transformers.
 
-2. **No free lunch**:
-   - Best performance requires more computation
-   - Simple models often "good enough"
-   - Always consider your constraints (time, compute, accuracy requirements)
+## Dataset Characteristics Summary
 
-3. **Dataset size matters**:
-   - Small datasets (Adult): Simple models generalize better
-   - Large datasets (PCam): Complex models can shine
+| Dataset   | Samples | Input Type     | Spatial Structure | Best Fit (Typical) |
+|----------|---------|----------------|-------------------|--------------------|
+| Adult    | ~48K    | Feature vector | No                | MLP / tabular model |
+| CIFAR-100| 50K+10K | 32×32 RGB      | Yes               | CNN / ViT          |
+| PCam     | ~327K   | 96×96 RGB      | Yes               | CNN / ViT          |
 
-4. **Evaluation is multi-dimensional**:
-   - Accuracy is not everything
-   - Consider: training time, inference speed, interpretability, robustness
+What I learned:
 
-### Recommendations for Practitioners
+1. Architecture choice should match the structure of the data.
+2. Better performance often costs more compute and longer training.
+3. Simple baselines can be strong, especially on tabular datasets.
+4. Evaluation should include accuracy, F1, training time, parameter count, and practical constraints.
 
-- 🔍 **Start simple**: Try MLP or CNN first
-- 📊 **Profile your data**: Understand structure before choosing architecture
-- ⚡ **Benchmark early**: Test multiple approaches quickly
-- 🎯 **Match architecture to application**: Medical diagnosis ≠ spam filter
-- 💰 **Consider costs**: Training time, inference speed, hardware requirements
 
-## 🤝 Contributing
-
-Feel free to:
-- Report bugs
-- Suggest improvements
-- Add new datasets or architectures
-- Share your experimental results
-
-## 📚 References
-
-- [UCI Adult Dataset](https://archive.ics.uci.edu/ml/datasets/adult)
-- [CIFAR-100](https://www.cs.toronto.edu/~kriz/cifar.html)
-- [PatchCamelyon](https://github.com/basveeling/pcam)
-- [PyTorch Documentation](https://pytorch.org/docs/)
-- [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
-- [An Image is Worth 16x16 Words (ViT)](https://arxiv.org/abs/2010.11929)
-
-## 📝 License
-
-This project is created for educational purposes as part of a Deep Learning course assignment.
-
----
-
-**Author**: [Your Name]  
-**Course**: Deep Learning  
-**Date**: January 2026
+- UCI Adult Dataset: https://archive.ics.uci.edu/ml/datasets/adult
+- CIFAR-100: https://www.cs.toronto.edu/~kriz/cifar.html
+- PatchCamelyon: https://github.com/basveeling/pcam
+- PyTorch Documentation: https://pytorch.org/docs/
+- Attention Is All You Need: https://arxiv.org/abs/1706.03762
+- An Image is Worth 16x16 Words (ViT): https://arxiv.org/abs/2010.11929

@@ -1,0 +1,51 @@
+architecture: mlp
+attention:
+  dropout: 0.1
+  embed_dim: 64
+  feedforward_dim: 256
+  num_heads: 4
+  num_layers: 2
+cnn:
+  batch_norm: true
+  conv_channels:
+  - 32
+  - 64
+  dropout: 0.3
+  fc_sizes:
+  - 128
+  kernel_sizes:
+  - 3
+  - 3
+  pool_sizes:
+  - 2
+  - 2
+data_split:
+  test: 0.15
+  train: 0.7
+  val: 0.15
+dataset: pcam
+logging:
+  save_plots: true
+  tensorboard: true
+  verbose: true
+mlp:
+  activation: relu
+  batch_norm: true
+  dropout: 0.3
+  hidden_sizes:
+  - 128
+  - 64
+paths:
+  checkpoint_dir: ./checkpoints
+  data_dir: ./data
+  results_dir: ./results
+training:
+  batch_size: 256
+  device: cuda
+  early_stopping: false
+  epochs: 20
+  learning_rate: 0.001
+  optimizer: adam
+  patience: 5
+  seed: 42
+  weight_decay: 0.0001

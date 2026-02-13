@@ -6,23 +6,6 @@ A benchmark comparing three neural network architectures (MLP, CNN, attention-ba
 
 This project implements and evaluates nine dataset–architecture combinations to understand which model types work best for tabular data versus image data. The main goal is to compare performance, training cost, and model suitability across tasks in a consistent experimental setup.
 
-## Learning Objectives
-
-By completing this assignment, I practiced:
-
-- Preprocessing datasets for different modalities (tabular and image)
-- Implementing multiple neural architectures in PyTorch
-- Training, validating, and testing models consistently across settings
-- Comparing models using quantitative metrics and qualitative reasoning
-- Writing experimental analysis and conclusions
-
-## Installation
-
-### Prerequisites
-
-- Python 3.8+
-- CUDA-capable GPU (recommended)
-
 ### Setup
 
 1. Clone the repository:
@@ -65,7 +48,7 @@ Run all nine combinations:
 python train.py --all
 ```
 
-This trains and evaluates every dataset–architecture pair and may take a long time depending on hardware.
+This trains and evaluates every dataset–architecture pair
 
 ### Visualize Results
 
@@ -125,8 +108,6 @@ Categories include animals, vehicles, household items, and natural scenes.
 - Classes: 2 (tumor vs normal)
 - Metrics: Accuracy, F1-score
 - Auto-download: Synthetic demo data is generated
-
-Note: For real PCam data, see the PCam GitHub repository linked in the references.
 
 ## Architectures
 
@@ -227,14 +208,16 @@ Test 2
 
 | Dataset    | Architecture | Accuracy | F1-Score | Training Time | Params |
 |------------|--------------|----------|----------|---------------|--------|
-| Adult      | MLP          | 0.8535   | 0.6808   | 9.4s          | 10,690 |
-| CIFAR-100  | MLP          | 0.1826   | 0.1566   | 77.5s         | 408,484|
-| CIFAR-100  | CNN          | 0.1930   | 0.1652   | 77.5s         | 556,900|
-| PCam       | MLP          | 0.5100   | 0.3951   | 6.7s          | 3.5M   |
-| PCam       | CNN          | 0.8734   | 0.8698   | 987s          | 2.2M   |
+| Adult      | MLP          | 0.8528   | 0.6810   |  13.1s        | 10,690 |
+| CIFAR-100  | MLP          | 0.1853   | 0.1590   |  200.3s       |408,484 |
+| CIFAR-100  | CNN          | 0.2013   | 0.1745   |  196.4s       | 556,900|
+| PCam       | MLP          | 0.5250   | 0.6245   | 13.5s         | 3.5M   |
+| PCam       | CNN          | 0.4800   | 0.0000   | 14.2s         | 4.5M   |
 
 
 ## Analysis and Insights
+
+-Ran it twice, once on lab computers and the second on personal laptop. The second time the CIFAR-100 CNN hit 20.13% this time, the best CNN result yet. For some reason the training time charts would notoutput correctly and is just blank. 
 
 ### Adult Dataset (Tabular)
 
